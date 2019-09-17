@@ -9,53 +9,43 @@ Your Turn 0
 Add a setup chunk that loads the tidyverse packages.
 
 ``` r
-library(tidyverse)
+data(mpg)
+summary(mpg)
 ```
 
-    ## Registered S3 method overwritten by 'dplyr':
-    ##   method               from  
-    ##   as.data.frame.tbl_df tibble
-
-    ## Registered S3 methods overwritten by 'ggplot2':
-    ##   method         from 
-    ##   [.quosures     rlang
-    ##   c.quosures     rlang
-    ##   print.quosures rlang
-
-    ## ── Attaching packages ───────────────────────────────────────────────── tidyverse 1.2.1 ──
-
-    ## ✔ ggplot2 3.0.0     ✔ purrr   0.2.5
-    ## ✔ tibble  1.4.2     ✔ dplyr   0.7.6
-    ## ✔ tidyr   0.8.3     ✔ stringr 1.3.1
-    ## ✔ readr   1.1.1     ✔ forcats 0.3.0
-
-    ## ── Conflicts ──────────────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-
-``` r
-mpg
-```
-
-    ## # A tibble: 234 x 11
-    ##    manufacturer model displ  year   cyl trans drv     cty   hwy fl    cla…
-    ##    <chr>        <chr> <dbl> <int> <int> <chr> <chr> <int> <int> <chr> <ch>
-    ##  1 audi         a4      1.8  1999     4 auto… f        18    29 p     com…
-    ##  2 audi         a4      1.8  1999     4 manu… f        21    29 p     com…
-    ##  3 audi         a4      2    2008     4 manu… f        20    31 p     com…
-    ##  4 audi         a4      2    2008     4 auto… f        21    30 p     com…
-    ##  5 audi         a4      2.8  1999     6 auto… f        16    26 p     com…
-    ##  6 audi         a4      2.8  1999     6 manu… f        18    26 p     com…
-    ##  7 audi         a4      3.1  2008     6 auto… f        18    27 p     com…
-    ##  8 audi         a4 q…   1.8  1999     4 manu… 4        18    26 p     com…
-    ##  9 audi         a4 q…   1.8  1999     4 auto… 4        16    25 p     com…
-    ## 10 audi         a4 q…   2    2008     4 manu… 4        20    28 p     com…
-    ## # ... with 224 more rows
+     manufacturer          model               displ            year     
+     Length:234         Length:234         Min.   :1.600   Min.   :1999  
+     Class :character   Class :character   1st Qu.:2.400   1st Qu.:1999  
+     Mode  :character   Mode  :character   Median :3.300   Median :2004  
+                                           Mean   :3.472   Mean   :2004  
+                                           3rd Qu.:4.600   3rd Qu.:2008  
+                                           Max.   :7.000   Max.   :2008  
+          cyl           trans               drv                 cty       
+     Min.   :4.000   Length:234         Length:234         Min.   : 9.00  
+     1st Qu.:4.000   Class :character   Class :character   1st Qu.:14.00  
+     Median :6.000   Mode  :character   Mode  :character   Median :17.00  
+     Mean   :5.889                                         Mean   :16.86  
+     3rd Qu.:8.000                                         3rd Qu.:19.00  
+     Max.   :8.000                                         Max.   :35.00  
+          hwy             fl               class          
+     Min.   :12.00   Length:234         Length:234        
+     1st Qu.:18.00   Class :character   Class :character  
+     Median :24.00   Mode  :character   Mode  :character  
+     Mean   :23.44                                        
+     3rd Qu.:27.00                                        
+     Max.   :44.00                                        
 
 Your Turn 1
 -----------
 
 Run the code on the slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
+
+``` r
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
+```
+
+![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 Your Turn 2
 -----------
@@ -64,7 +54,7 @@ Replace this scatterplot with one that draws boxplots. Use the cheatsheet. Try y
 
 ``` r
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = class, y = hwy))
+  geom_boxplot(mapping = aes(x = class, y = hwy))
 ```
 
 ![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-3-1.png)
@@ -74,10 +64,27 @@ Your Turn 3
 
 Make a histogram of the `hwy` variable from `mpg`. Hint: do not supply a y variable.
 
+``` r
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy))
+```
+
+    `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+
+![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-4-1.png)
+
 Your Turn 4
 -----------
 
 Use the help page for `geom_histogram` to make the bins 2 units wide.
+
+``` r
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy), 
+                 binwidth = 2)
+```
+
+![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-5-1.png)
 
 Your Turn 5
 -----------
@@ -85,11 +92,32 @@ Your Turn 5
 Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.
 
 ``` r
-ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy))
+c <- ggplot(data = mpg, mapping = aes(x = displ, y = hwy))
+
+c + geom_point(mapping = aes(color = class))
 ```
 
 ![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-6-1.png)
+
+``` r
+c + geom_point(mapping = aes(shape = class, color = class))
+```
+
+    Warning: The shape palette can deal with a maximum of 6 discrete values
+    because more than 6 becomes difficult to discriminate; you have 7.
+    Consider specifying shapes manually if you must have them.
+
+    Warning: Removed 62 rows containing missing values (geom_point).
+
+![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-6-2.png)
+
+``` r
+c + geom_point(mapping = aes(alpha = class))
+```
+
+    Warning: Using alpha for a discrete variable is not advised.
+
+![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-6-3.png)
 
 Help Me
 -------
@@ -128,6 +156,13 @@ Your Turn 6
 
 Make a bar chart `class` colored by `class`. Use the help page for `geom_bar` to choose a "color" aesthetic for class.
 
+``` r
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, color = class))
+```
+
+![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
 Quiz
 ----
 
@@ -139,7 +174,7 @@ ggplot(mpg) +
   geom_smooth(aes(displ, hwy))
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
+    `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 
 ![](Week-4-Visualize-Exercises_files/figure-markdown_github/unnamed-chunk-9-1.png)
 

@@ -8,13 +8,15 @@ output: github_document
 ## Your Turn 0
 
 Add a setup chunk that loads the tidyverse packages.
-```{r setup}
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "")
 library(tidyverse)
 ```
 
 
 ```{r}
-mpg
+data(mpg)
+summary(mpg)
 ```
 
 
@@ -23,7 +25,8 @@ mpg
 Run the code on the slide to make a graph. Pay strict attention to spelling, capitalization, and parentheses!
 
 ```{r}
-
+ggplot(data = mpg) +
+  geom_point(mapping = aes(x = displ, y = hwy))
 ```
 
 
@@ -33,7 +36,7 @@ Replace this scatterplot with one that draws boxplots. Use the cheatsheet. Try y
 
 ```{r}
 ggplot(data = mpg) +
-  geom_point(mapping = aes(x = class, y = hwy))
+  geom_boxplot(mapping = aes(x = class, y = hwy))
 ```
 
 
@@ -42,7 +45,8 @@ ggplot(data = mpg) +
 Make a histogram of the `hwy` variable from `mpg`. Hint: do not supply a y variable.
 
 ```{r}
-
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy))
 ```
 
 ## Your Turn 4
@@ -50,7 +54,9 @@ Make a histogram of the `hwy` variable from `mpg`. Hint: do not supply a y varia
 Use the help page for `geom_histogram` to make the bins 2 units wide.
 
 ```{r}
-
+ggplot(data = mpg) +
+  geom_histogram(mapping = aes(x = hwy), 
+                 binwidth = 2)
 ```
 
 
@@ -59,8 +65,11 @@ Use the help page for `geom_histogram` to make the bins 2 units wide.
 Add `color`, `size`, `alpha`, and `shape` aesthetics to your graph. Experiment.  
 
 ```{r}
-ggplot(data = mpg) +
-  geom_point(mapping = aes(x = displ, y = hwy))
+c <- ggplot(data = mpg, mapping = aes(x = displ, y = hwy))
+
+c + geom_point(mapping = aes(color = class))
+c + geom_point(mapping = aes(shape = class, color = class))
+c + geom_point(mapping = aes(alpha = class))
 ```
 
 ## Help Me
@@ -84,7 +93,8 @@ q + facet_wrap(~ class)
 Make a bar chart `class` colored by `class`. Use the help page for `geom_bar` to choose a "color" aesthetic for class.
 
 ```{r}
-
+ggplot(data = mpg) +
+  geom_bar(mapping = aes(x = class, color = class))
 ```
 
 ## Quiz
