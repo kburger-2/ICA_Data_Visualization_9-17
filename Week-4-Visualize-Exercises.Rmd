@@ -1,10 +1,16 @@
 ---
 title: "Visualize Data"
+author: "Kourtney Burger"
+date: "9/17/19"
+output: github_document
 ---
 
 ## Your Turn 0
 
 Add a setup chunk that loads the tidyverse packages.
+```{r setup}
+library(tidyverse)
+```
 
 
 ```{r}
